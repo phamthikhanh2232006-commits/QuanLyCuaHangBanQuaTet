@@ -43,7 +43,7 @@ namespace QuanLyCuaHangBanQuaTet
         }
         private void btnKhachHang_Click(object sender, EventArgs e)
         {
-            if (currentUserRole == "Admin" || currentUserRole.ToLower() == "kế toán" || currentUserRole.ToLower() == "ke toan" || currentUserRole.ToLower() == "ketoan")
+            if (currentUserRole == "Admin" || currentUserRole.ToLower().Contains("kế toán") || currentUserRole.ToLower() == "ke toan" || currentUserRole.ToLower() == "ketoan" || currentUserRole.ToLower().Contains("nhân viên") || currentUserRole.ToLower().Contains("nhan vien") || currentUserRole.ToLower().Contains("nhanvien") || currentUserRole.ToLower() == "user")
             {
                 frmKhachHang f = new frmKhachHang();
                 f.ShowDialog();

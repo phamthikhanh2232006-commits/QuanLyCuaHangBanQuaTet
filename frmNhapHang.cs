@@ -18,7 +18,7 @@ namespace QuanLyCuaHangBanQuaTet
             string role = Program.CurrentUserRole.ToLower();
             if (role == "kế toán" || role == "ke toan" || role == "ketoan")
             {
-                btnSua.Enabled = false;
+                // Chỉ cấm xóa đơn hàng, vẫn cho kế toán xem và nhập hàng
                 btnXoa.Enabled = false;
                 if (dgvNhapHang != null) dgvNhapHang.ReadOnly = true;
             }
@@ -103,7 +103,7 @@ namespace QuanLyCuaHangBanQuaTet
         }
         private void btnSua_Click(object sender, EventArgs e)
         {
-            string query = "UPDATE tblDonNhapHang SET MaNhaCungCap=@MaNhaCungCap, TongTien=0, " +
+            string query = "UPDATE tblDonNhapHang SET MaNhaCungCap=@MaNhaCungCap, " +
                            "TrangThai=@TrangThai, GhiChu=@GhiChu WHERE MaDonNhap=@MaDonNhap";
             SqlParameter[] paras = {
                 new SqlParameter("@MaDonNhap", txtMaDon.Text.Trim()),
@@ -236,7 +236,7 @@ namespace QuanLyCuaHangBanQuaTet
                 if (DatabaseUtils.ExecuteNonQuery(query, paras) > 0)
                 {
                     // Tự động CỘNG DỒN tổng tiền vào Phiếu Nhập Hàng, tạo một Parameter Array MỚI HOÀN TOÀN để tránh lỗi "is already contained"
-                    string queryUpdateTongTien = "UPDATE tblDonNhapHang SET TongTien = TongTien + (@SoLuong * @DonGia) WHERE MaDonNhap = @MaDon";
+                    string queryUpdateTongTien = "UPDATE tblDonNhapHang SET TongTien = TongTien + (@SoLuong * @DonGia), TrangThai = N'Hoàn thành' WHERE MaDonNhap = @MaDon";
                     SqlParameter[] parasUpdate = {
                         new SqlParameter("@MaDon", txtMaDon.Text.Trim()),
                         new SqlParameter("@SoLuong", Convert.ToInt32(txtSoLuong.Text.Trim())),
